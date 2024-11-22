@@ -1,0 +1,42 @@
+name: Deploy Blog Pages
+
+on:
+  push:
+    branches: ['master']
+  pull_request:
+    branches: ['master']
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Nginx Server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # 私钥id_rsa
+          ALIYUN_SERVER_IP: ${{ secrets.ALIYUN_SERVER_IP }} # 云服务器IP地址
+          ALIYUN_SERVER_PASSWORD: ${{ secrets.ALIYUN_SERVER_PASSWORD }} # 云服务器密码
+          ALIYUN_SERVER_USER: ${{ secrets.ALIYUN_SERVER_USER }} # 云服务器用户名 默认为root
+          REMOTE_PATH: ${{ secrets.REMOTE_PATH }} # 云服务器部署目录 /home/coffee-bean-react-app/dist
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan $ALIYUN_SERVER_IP >> ~/.ssh/known_hosts
+          #scp -r ./dist/* $ALIYUN_SERVER_USER@$ALIYUN_SERVER_IP:$REMOTE_PATH
+          sshpass -p $ALIYUN_SERVER_PASSWORD scp -r ./dist/* root@$ALIYUN_SERVER_IP:$REMOTE_PATH
