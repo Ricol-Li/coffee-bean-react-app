@@ -5,7 +5,12 @@ import './index.css'
 function App() {
   return (
     <div className="app">
-      <RouterProvider router={router} />
+      <RouterProvider
+        router={router}
+        future={{
+          v7_startTransition: true,
+        }}
+      />
     </div>
   )
 }

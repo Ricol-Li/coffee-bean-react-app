@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Outlet } from 'react-router-dom'
 import CommonAside from '../components/commonAside'
 import CommonHeader from '../components/commonHeader'
-
+import { useSelector } from 'react-redux'
 import { Layout, theme } from 'antd'
+import { RootState } from '../store/index'
 
 const { Content } = Layout
 
@@ -11,16 +12,15 @@ const Main: React.FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken()
-  const [collapsed, setCollapsed] = useState<boolean>(false)
+
+  // 获取collapsed状态
+  const isCollapsed = useSelector((state: RootState) => state.tab.isCollapsed)
 
   return (
     <Layout className="main-container">
-      <CommonAside collapsed={collapsed} />
+      <CommonAside collapsed={isCollapsed} />
       <Layout>
-        <CommonHeader
-          collapsed={collapsed}
-          onClick={() => setCollapsed(!collapsed)}
-        />
+        <CommonHeader collapsed={isCollapsed} />
         <Content
           style={{
             margin: '24px 16px',

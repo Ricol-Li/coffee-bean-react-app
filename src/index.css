@@ -33,7 +33,7 @@ table { border-collapse:collapse; border-spacing:0; }
 
 
 .main-container {
-  min-height: calc(100vh - 16px);
+  min-height: calc(100vh - 0px);
 }
 
 .main-container .app-name {

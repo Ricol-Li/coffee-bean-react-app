@@ -1,4 +1,5 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { createBrowserRouter } from 'react-router-dom'
+import { RedirectToHome } from '../components/common/RedirectToHome'
 import Main from '../pages/main'
 import Home from '../pages/home'
 import Mall from '../pages/mall'
@@ -13,7 +14,7 @@ const routes = [
     children: [
       {
         path: '/react',
-        element: <Navigate to="/react/home" replace />,
+        Component: RedirectToHome,
       },
       {
         path: 'home',
@@ -44,4 +45,6 @@ const routes = [
   },
 ]
 
-export default createBrowserRouter(routes)
+const router = createBrowserRouter(routes)
+
+export default router
