@@ -1,13 +1,12 @@
 import './App.css'
-import Home from "./home";
-import About from "./about";
-
+import router from './router/index.tsx'
+import { RouterProvider } from 'react-router-dom'
+import './index.css'
 function App() {
   return (
-    <>
-      <Home />
-      <About />
-    </>
+    <div className="app">
+      <RouterProvider router={router} />
+    </div>
   )
 }
 
