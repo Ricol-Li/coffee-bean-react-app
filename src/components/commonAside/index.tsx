@@ -56,7 +56,7 @@ const getMenuItems = (
 
 const items = getMenuItems(menuConfig)
 
-console.log(items)
+// console.log(items)
 
 interface CommonAsideProps {
   collapsed: boolean

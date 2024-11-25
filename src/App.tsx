@@ -1,7 +1,7 @@
 import './App.css'
 import router from './router/index.tsx'
 import { RouterProvider } from 'react-router-dom'
-import './index.css'
+import './index.less'
 function App() {
   return (
     <div className="app">
